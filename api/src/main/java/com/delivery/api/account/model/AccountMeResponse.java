@@ -11,8 +11,7 @@ import java.time.LocalDateTime;
 @Data
 @Builder
 public class AccountMeResponse {
-
-    private String email;
     private String name;
+    private String email;
     private LocalDateTime registeredAt;
 }
