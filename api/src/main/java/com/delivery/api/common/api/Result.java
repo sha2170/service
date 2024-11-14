@@ -1,5 +1,6 @@
 package com.delivery.api.common.api;
 
+import com.delivery.api.common.error.ErrorCodeInterface;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -20,6 +21,30 @@ public class Result {
                 .resultCode(200)
                 .resultMessage("OK")
                 .resultDescription("성공")
+                .build();
+    }
+
+    public static Result ERROR(ErrorCodeInterface errorCodeInterface) {
+        return Result.builder()
+                .resultCode(errorCodeInterface.getErrorCode())
+                .resultMessage(errorCodeInterface.getDescription())
+                .resultDescription("오류")
+                .build();
+    }
+
+    public static Result ERROR(ErrorCodeInterface errorCodeInterface, Throwable tx) {
+        return Result.builder()
+                .resultCode(errorCodeInterface.getErrorCode())
+                .resultMessage(errorCodeInterface.getDescription())
+                .resultDescription(tx.getLocalizedMessage())
+                .build();
+    }
+
+    public static Result ERROR(ErrorCodeInterface errorCodeInterface, String description) {
+        return Result.builder()
+                .resultCode(errorCodeInterface.getErrorCode())
+                .resultMessage(errorCodeInterface.getDescription())
+                .resultDescription(description)
                 .build();
     }
 }
