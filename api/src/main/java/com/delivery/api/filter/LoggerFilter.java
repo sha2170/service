@@ -18,6 +18,8 @@ public class LoggerFilter implements Filter {
         var req = new ContentCachingRequestWrapper((HttpServletRequest) servletRequest);
         var res = new ContentCachingResponseWrapper((HttpServletResponse) servletResponse);
 
+        log.info("INIT URI : {}", req.getRequestURI());
+
         filterChain.doFilter(req, res);
 
         // request 정보
@@ -45,16 +47,14 @@ public class LoggerFilter implements Filter {
         var responseHeaderValues = new StringBuilder();
 
         res.getHeaderNames().forEach(headerkey -> {
-            var headerValue = res.getHeader(headerkey);
+            var haderValue = res.getHeader(headerkey);
 
-            responseHeaderValues.append(headerkey).append(" : ").append(headerValue).append(", ");
+            responseHeaderValues.append(headerkey).append(" : ").append(haderValue).append(", ");
         });
 
-        var responseBody = new String(res.getContentAsByteArray());
-        log.info("<<<<< uri : {}, method : {}, header : {}, body : {}", uri, method, responseHeaderValues, responseBody);
+        var reponseBody = new String(res.getContentAsByteArray());
+        log.info("<<<<< uri : {}, method : {}, header : {}, body : {}", uri, method, responseHeaderValues, reponseBody);
 
-
-        res.copyBodyToResponse(); // responseBody 내용들 앞에서 모두 잃어버려서, 초기화해주지 않으면 빈 responseBody가 전송됨
+        res.copyBodyToResponse(); // responseBody 내용을 앞에서 모두 읽어버려서, 초기화해주지 않으면 빈 responseBody 가 전송됨.
     }
-
 }
