@@ -14,7 +14,7 @@ import java.time.LocalDateTime;
 import java.util.Optional;
 
 @RequiredArgsConstructor
-@Service    // 해당 도메인만 처리
+@Service     // 해당 도메인만 처리
 public class UserService {
 
     private final UserRepository userRepository;
@@ -36,6 +36,15 @@ public class UserService {
         return userRepository.findFirstByEmailAndPasswordAndStatusOrderByIdDesc(
                 email,
                 password,
+                UserStatus.REGISTERED
+        ).orElseThrow(() -> new ApiException(UserErrorCode.USER_NOT_FOUND));
+    }
+
+    public UserEntity getUserWithThrow(
+            Long userId
+    ){
+        return userRepository.findFirstByIdAndStatusOrderByIdDesc(
+                userId,
                 UserStatus.REGISTERED
         ).orElseThrow(() -> new ApiException(UserErrorCode.USER_NOT_FOUND));
     }
