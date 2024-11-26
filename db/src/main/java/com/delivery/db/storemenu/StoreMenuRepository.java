@@ -10,7 +10,7 @@ public interface StoreMenuRepository extends JpaRepository<StoreMenuEntity, Long
 
     // 유효한 단일 메뉴 체크
     // select * from store_menu id = ? and status =? order by id desc limit 1
-    Optional<StoreMenuEntity> findByIdAndStatusOrderByIdDesc(Long id, StoreMenuStatus status);
+    Optional<StoreMenuEntity> findFirstByIdAndStatusOrderByIdDesc(Long id, StoreMenuStatus status);
 
     // 특정 가게 메뉴 가져오기
     // select * from store_menu where store_id = ? and status = ? order by sequence desc;
