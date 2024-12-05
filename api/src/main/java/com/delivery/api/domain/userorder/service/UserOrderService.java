@@ -19,6 +19,14 @@ public class UserOrderService {
     private final UserOrderRepository userOrderRepository;
 
     // 특정 유저의 특정 주문
+    public UserOrderEntity getUserOrderWithoutStatusWithThrow(
+            Long id, // 주문 id
+            Long userId // 유저 id
+    ){
+        return userOrderRepository.findAllByIdAndUserId(id, userId)
+                .orElseThrow(() ->new ApiException(ErrorCode.NULL_POINT));
+    }
+
     public UserOrderEntity getUserOrderWithThrow(
             Long id, // 주문 id
             Long userId // 유저 id
